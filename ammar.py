@@ -1,4 +1,6 @@
 import requests
+import time
+import csv
 import streamlit as st
 from streamlit_lottie import st_lottie
 import datetime as dt
@@ -19,7 +21,7 @@ st.title('Welcome to Histogram and availability checker!\nApp built by Ammar MT.
 
 st.write(
     'Please select the website you want to check the availability of'
-    )
+)
 
 websites = {
     "Google": "https://www.google.com",
@@ -60,10 +62,10 @@ if show_slider:
         help='slide the bar to select the interval in minutes'
     )
 
-
 selected_date = st.date_input(
-    "Select the date to see the history of the website's availability",
+    "Select the date to see the history of the website's availability.\nAvailable date's is between January 1st 2023 and Today.",
     date.today(),
+    min_value=date(2023, 1, 1),
     max_value=date.today(),  # Restrict date selection to today or earlier
     help="Get the history",
 )
@@ -80,16 +82,25 @@ st.write(
     'Below you can see the charts and the history for the history of the availability of the website.   '
 )
 
-if st.button('Show history', help='click the message to show the history of the availability of the website'):
+# Check availability only if Google is selected and the "Show history" button is clicked
+if selection == "Google" and st.button('Show history', help='click the message to show the history of the availability of the website'):
+    # Check website availability and update chart
+    response_times = []
+    for i in range(10):
+        start_time = time.perf_counter()
+        response = requests.get("https://www.google.com")
+        end_time = time.perf_counter()
+        response_time = end_time - start_time
+        response_times.append(response_time)
+
     show_chart = True
 
-# Show the "Hide chart" button only when the chart is showing
+# Show the chart
 if show_chart:
-    st.line_chart(
-        # Enter your data below! Usually this is not a dict, but a Pandas Dataframe.,
-        data={'time': [0, 1, 2, 3, 4, 5, 6], 'stock_value': [100, 200, 150, 300, 450, 500, 600]},
-        x='time',
-        y='stock_value'
+    st.bar_chart(
+        data={'round': [i for i in range(10)], 'response_time': response_times},
+        x='round',
+        y='response_time'
     )
 
     if show_chart and not hide_chart:
