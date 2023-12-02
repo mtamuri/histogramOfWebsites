@@ -17,7 +17,8 @@ def load_lottieurl(url):
 
 lottie_coding = load_lottieurl("https://lottie.host/279133b8-d82b-4d56-870d-daae4fce9a1b/OX1EXSxzFL.json")
 
-st.title('Welcome to Histogram and availability checker!\nApp built by Ammar MT. ©')
+st.title('Welcome to Histogram and availability checker!\nWebApp built for systems programming by: [Ammar MT.](https://ammarmt.tech/) ©')
+
 
 st.write(
     'Please select the website you want to check the availability of'
@@ -26,8 +27,8 @@ st.write(
 websites = {
     "Google": "https://www.google.com",
     "Saat Teknoloji": "https://saatteknoloji.com/",
-    "Beykoz Official Website": "https://www.beykoz.edu.tr/",
-    "OIS": "https://online.beykoz.edu.tr",
+    "Beykoz Official Website": "https://beykoz.edu.tr/",
+    "OIS": "https://ois.beykoz.edu.tr",
 }
 
 selection = st.selectbox("Select a website:", websites.keys())
@@ -68,7 +69,7 @@ selected_date = st.date_input(
     min_value=date(2023, 1, 1),
     max_value=date.today(),  # Restrict date selection to today or earlier
     help="Get the history",
-)
+)   
 
 if selection and selected_date:
     st.write(f"You selected: {selection}")
@@ -79,26 +80,27 @@ show_chart = False
 hide_chart = False
 
 st.write(
-    'Below you can see the charts and the history for the history of the availability of the website.   '
+    f'Below you can see the charts and the history for the history of the availability of: {selection}   '
 )
 
-# Check availability only if Google is selected and the "Show history" button is clicked
-if selection == "Google" and st.button('Show history', help='click the message to show the history of the availability of the website'):
+# Check website availability only if the selected website matches the website being checked
+if st.button('Show history', help='click the message to show the history of the availability of the website'):
     # Check website availability and update chart
     response_times = []
     for i in range(10):
         start_time = time.perf_counter()
-        response = requests.get("https://www.google.com")
+        response = requests.get(website_url)  # Use the selected website URL here
         end_time = time.perf_counter()
         response_time = end_time - start_time
         response_times.append(response_time)
 
-    show_chart = True
+    show_chart = True  # You can use this variable to trigger chart display in your Streamlit app
 
 # Show the chart
 if show_chart:
+    chart_data = {'round': [i + 1 for i in range(10)], 'response_time': response_times}
     st.bar_chart(
-        data={'round': [i for i in range(10)], 'response_time': response_times},
+        data=chart_data,
         x='round',
         y='response_time'
     )
@@ -107,3 +109,7 @@ if show_chart:
         if st.button('Hide chart', help='click the message to hide the chart'):
             hide_chart = True
 st_lottie(lottie_coding, height=600, key="coding")
+
+st.write('''
+        This app is built by [Ammar MT.](https://ammarmt.tech/) ©
+        ''')
