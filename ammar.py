@@ -15,9 +15,9 @@ st.set_page_config(page_title="SysProg, Ammar's Project", page_icon=":👨‍�
         return None
     return r.json()
 '''
-lottie_coding = load_lottieurl("https://lottie.host/279133b8-d82b-4d56-870d-daae4fce9a1b/OX1EXSxzFL.json")
+#lottie_coding = load_lottieurl("https://lottie.host/279133b8-d82b-4d56-870d-daae4fce9a1b/OX1EXSxzFL.json")
 
-#st.title('Welcome to Histogram and availability checker!\nWebApp built for systems programming by: [Ammar MT.](https://ammarmt.tech/) ©')
+st.title('Welcome to Histogram and availability checker!\nWebApp built for systems programming by: [Ammar MT.](https://ammarmt.tech/) ©')
 
 
 st.write(
