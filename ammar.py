@@ -9,12 +9,12 @@ from datetime import date
 
 st.set_page_config(page_title="SysProg, Ammar's Project", page_icon=":👨‍💻:")
 
-'''def load_lottieurl(url):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
-'''
+#def load_lottieurl(url):
+#    r = requests.get(url)
+ #   if r.status_code != 200:
+#        return None
+ #   return r.json()
+
 #lottie_coding = load_lottieurl("https://lottie.host/279133b8-d82b-4d56-870d-daae4fce9a1b/OX1EXSxzFL.json")
 
 st.title('Welcome to Histogram and availability checker!\nWebApp built for systems programming by: [Ammar MT.](https://ammarmt.tech/) ©')
