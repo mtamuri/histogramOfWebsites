@@ -121,7 +121,7 @@ if st.button('Show history', help='click the message to show the history of the 
     show_chart = True  # You can use this variable to trigger chart display in your Streamlit app
 
 # Show the chart"""
-show_chart = True
+#show_chart = True
 chart_data = {'round': [i + 1 for i in range(len(response_times))], 'response_time': response_times}
 #chart_data = {'round': [i + 1 for i in range(len(filtered_dates))], 'response_time': filtered_response_times}
 if show_chart:
