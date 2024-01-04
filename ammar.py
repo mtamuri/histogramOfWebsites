@@ -72,8 +72,32 @@ selected_date = st.date_input(
 )   
 
 if selection and selected_date:
-    st.write(f"You selected: {selection}")
-    st.write(f"Selected Date: {selected_date}")
+    # Open the CSV file in read mode
+    with open("responses.csv", "r") as csvfile:
+        reader = csv.reader(csvfile)
+        # Skip the header row if present
+        next(reader, None)
+        dates = []      # Initialize empty list for storing dates
+        response_times = []  # Initialize empty list for storing response times
+        for row in reader:
+            try:
+                # Assume dates are in the second column and response times are in the third
+                date = row[1]
+                response_time = float(row[2])
+                # Add processed values to the respective lists
+                dates.append(date)
+                response_times.append(response_time)
+            except ValueError:
+                print(f"Error converting row: {row}")
+                continue
+
+    # ... further code for filtering and chart logic ...
+
+    # Convert the selected date to a format matching the stored dates
+    # Modify based on your actual date format in the CSV
+    selected_date_str = str(selected_date)
+    filtered_dates = [date for date in dates if date == selected_date_str]
+    filtered_response_times = [response_times[i] for i, date in enumerate(dates) if date == selected_date_str]
 
 # Initialize the button state variables
 show_chart = False
@@ -96,18 +120,21 @@ if st.button('Show history', help='click the message to show the history of the 
 
     show_chart = True  # You can use this variable to trigger chart display in your Streamlit app
 
-# Show the chart
+# Show the chart"""
+show_chart = True
+#chart_data = {'round': [i + 1 for i in range(len(response_times))], 'response_time': response_times}
+chart_data = {'round': [i + 1 for i in range(len(filtered_dates))], 'response_time': filtered_response_times}
 if show_chart:
-    chart_data = {'round': [i + 1 for i in range(10)], 'response_time': response_times}
     st.bar_chart(
         data=chart_data,
         x='round',
         y='response_time'
     )
 
-    if show_chart and not hide_chart:
-        if st.button('Hide chart', help='click the message to hide the chart'):
-            hide_chart = True
+
+if show_chart and not hide_chart:
+    if st.button('Hide chart', help='click the message to hide the chart'):
+        hide_chart = True
 st_lottie(lottie_coding, height=600, key="coding")
 
 st.write('''
