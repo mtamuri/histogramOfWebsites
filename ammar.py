@@ -122,8 +122,8 @@ if st.button('Show history', help='click the message to show the history of the 
 
 # Show the chart"""
 show_chart = True
-chart_data = {'round': [i + 1 for i in range(len(response_times))], 'response_time': response_times}
-#chart_data = {'round': [i + 1 for i in range(len(filtered_dates))], 'response_time': filtered_response_times}
+#chart_data = {'round': [i + 1 for i in range(len(response_times))], 'response_time': response_times}
+chart_data = {'round': [i + 1 for i in range(len(filtered_dates))], 'response_time': filtered_response_times}
 if show_chart:
     st.bar_chart(
         data=chart_data,
